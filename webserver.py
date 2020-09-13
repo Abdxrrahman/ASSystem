@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(50), unique=True)
     password = db.Column(db.Integer)
     date_created = db.Column(db.DateTime, default=datetime.now)
+    online = db.Column(db.Boolean, default=False);
 
 
 @login_manager.user_loader
@@ -34,8 +35,8 @@ def authorization(name, password):
             TargetUser = User.query.filter_by(name=name).first()
             if(TargetUser.name == name and TargetUser.password == password):
                 login_user(TargetUser)
+                TargetUser.online = True
                 db.session.commit()
-
                 return redirect("/")
     except:
         print("")
@@ -79,6 +80,8 @@ def authorize():
 @app.route("/unauthorize/<name>/<id>", methods=["GET"])
 def unauthorize(name, id):
     user = User.query.filter_by(name=name).first()
+    user.online = False
+    db.session.commit()
     logout_user()
     return redirect(f"/")
 
@@ -90,7 +93,7 @@ def get_user(name):
 
 @app.route('/database')
 def get_users():
-    users = User.query.order_by(User.name).all()
+    users = User.query.order_by(User.id).all()
     return render_template("users.html", users=users)
 
 
