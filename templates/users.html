@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title></title>
+
+  </head>
+  <body>
+    {% include "navbar.html" %}
+
+    {% for user in users %}
+      {% if user == current_user %}
+      <div class="ur">
+        <p style="margin-bottom: -5px;"><strong>Username:</strong> {{ user.name }} <strong>password:</strong> {{ user.password }} <strong>ID:</strong> {{ user.id }}</p>
+        <a style="color: orange; font-size: 120%;">•</a>
+        {% if current_user.online %}
+          <a style="color: green; font-size: 120%;">•</a>
+        {% endif %}
+      </div>
+      {% elif current_user.name == "Abdxrrahman" %}
+      <div class="ur">
+        <p style="margin-bottom: -5px;"><strong>Username:</strong> {{ user.name }} <strong>password:</strong> {{ user.password }} <strong>ID:</strong> {{ user.id }}</p>
+        <a href="delete/{{ user.id }}" style="color: red; font-size: 120%;">•</a>
+        {% if current_user.online %}
+          <a style="color: green; font-size: 120%;">•</a>
+        {% endif %}
+      </div>
+      {% else %}
+      <div class="ur">
+        <p><strong>Username:</strong> {{ user.name }} <strong>ID:</strong> {{ user.id }}</p>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </body>
+</html>

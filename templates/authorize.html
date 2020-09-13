@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title></title>
+  </head>
+  <body>
+    {% include "navbar.html" %}
+    {% if current_user.is_authenticated == False %}
+    <div class="lfh" id="signin">
+      <form class="lf" action="/authorize" method="POST">
+        <br>
+        <label>SIGN IN</label>
+        <br>
+        <input type="text" class="it" id="un" name="username" placeholder="Enter username" maxlength="15">
+        <br>
+        <input style="margin-top: 10px;" type="password" class="it" id="pw" name="password" placeholder="Enter password" maxlength="40">
+        <br>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </form>
+
+    </div>
+
+
+
+    <div class="lfh" id="signup">
+      <form class="lf" action="/create/user" method="POST">
+        <br>
+        <label>SIGN UP</label>
+        <br>
+        <input type="text" class="it" id="un" name="username" placeholder="Choose a username" maxlength="15">
+        <br>
+        <input style="margin-top: 10px;" type="password" class="it" id="pw" name="password" placeholder="Choose a password" maxlength="40">
+        <br>
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </form>
+
+    </div>
+    <div style="width: 100%; text-align: center; margin-top: 210px;" class="">
+      <button style="margin-left: auto; margin-right: auto; width: 200px; border: 0; border-radius: 20px; background-color: white; color: #bf4a31;" type="" class="" onclick="signup(this)">Do you want to register instead?</button>
+    </div>
+
+    {% endif %}
+
+  </body>
+  <script type="text/javascript">
+    signupform = document.getElementById("signup").style.display = "none";
+    toggle = false;
+
+    function signup(button){
+      if(toggle == false){
+        signupform = document.getElementById("signin").style.display = "none";
+        signupform = document.getElementById("signup").style.display = "block";
+        button.innerHTML = "Do you already have an account?";
+        toggle = true;
+      }else if(toggle == true){
+        signupform = document.getElementById("signup").style.display = "none";
+        signupform = document.getElementById("signin").style.display = "block";
+        button.innerHTML = "Do you want to register instead?";
+        toggle = false;
+      }
+    }
+  </script>
+</html>

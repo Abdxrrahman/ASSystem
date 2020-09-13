@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title></title>
+  </head>
+  <body>
+    {% include "navbar.html" %}
+    {% for vote in votes %}
+      <p><strong>Title:</strong> {{ vote.title }} <strong>Author:</strong> {{ vote.user }} <strong>Message:</strong> {{ vote.message }} </p>
+    {% endfor %}
+
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title></title>
+  </head>
+  <body>
+
+    <div class="nb">
+      <p class="lt">Vote<strong>Today</strong></p>
+      {% if current_user.is_authenticated == False %}
+        <button class="lrb" type="button" name="button"><a href="authorize">Sign in</a></button>
+      {% else %}
+        <button class="lrb" type="button" name="button"><a href="unauthorize/{{ current_user.name }}/{{ current_user.id }}" method="POST">Sign out</a></button>
+        <p style="float: right; margin-top: -28px; text-align: center; font-size: 70%; width: 100%; color: #bf4a31;">Thank you for choosing this service:<strong> {{ current_user.name }}</strong></p>
+      {% endif %}
+
+    </div>
+
+  </body>
+</html>
