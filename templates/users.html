@@ -15,7 +15,7 @@
       <div class="ur">
         <p style="margin-bottom: -5px;"><strong>Username:</strong> {{ user.name }} <strong>password:</strong> {{ user.password }} <strong>ID:</strong> {{ user.id }}</p>
         <a style="color: orange; font-size: 120%;">•</a>
-        {% if current_user.is_active %}
+        {% if user.online %}
           <a style="color: green; font-size: 120%;">•</a>
         {% endif %}
       </div>
@@ -23,14 +23,14 @@
       <div class="ur">
         <p style="margin-bottom: -5px;"><strong>Username:</strong> {{ user.name }} <strong>password:</strong> {{ user.password }} <strong>ID:</strong> {{ user.id }}</p>
         <a href="delete/{{ user.id }}" style="color: red; font-size: 120%;">•</a>
-        {% if current_user.is_active %}
+        {% if user.online %}
           <a style="color: green; font-size: 120%;">•</a>
         {% endif %}
       </div>
       {% else %}
       <div class="ur">
         <p><strong>Username:</strong> {{ user.name }} <strong>ID:</strong> {{ user.id }}</p>
-        {% if user.is_active %}
+        {% if user.online %}
           <a style="color: green; font-size: 120%;">•</a>
         {% endif %}
       </div>
