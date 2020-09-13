@@ -26,7 +26,6 @@ class Voted(UserMixin, db.Model):
     user = db.Column(db.String(50), unique=False)
 
 
-HEEELLOOss
 @login_manager.user_loader
 def get_user(ident):
   return User.query.get(int(ident))
