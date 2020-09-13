@@ -118,4 +118,4 @@ def delete_user(id):
     return redirect(f"/database")
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True, host='192.168.1.65', use_reloader=True)
+    app.run(port=5000, debug=True, host='localhost', use_reloader=True)
