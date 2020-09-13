@@ -19,22 +19,10 @@ class User(UserMixin, db.Model):
     password = db.Column(db.Integer)
     date_created = db.Column(db.DateTime, default=datetime.now)
 
-class Voted(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), unique=True)
-    message = db.Column(db.String(500))
-    user = db.Column(db.String(50), unique=False)
 
-#dd
 @login_manager.user_loader
 def get_user(ident):
   return User.query.get(int(ident))
-
-@app.route("/voted/<title>/<message>")
-def voted(title, message):
-    vote = Voted(title=title, message=message, user=current_user.name)
-    db.session.add(vote)
-    db.session.commit()
 
 
 
@@ -57,10 +45,6 @@ def authorization(name, password):
 def main():
     return render_template("index.html")
 
-@app.route("/latest/votes")
-def votes():
-    votes = Voted.query.order_by(Voted.id).all()
-    return render_template("last_votes.html", votes=votes)
 
 @app.route("/create/user", methods=["POST"])
 def create_new_user():
@@ -118,4 +102,4 @@ def delete_user(id):
     return redirect(f"/database")
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True, host='localhost', use_reloader=True)
+    app.run(port=5000, debug=True, host='192.168.1.65', use_reloader=True)
