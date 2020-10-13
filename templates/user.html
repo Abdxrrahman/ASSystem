@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title></title>
+  </head>
+  <body>
+    {% include "navbar.html" %}
+    <div class="pb">
+      <p>{{ user.name }}</p>
+      <p style="font-size: 50%; color: #bf4a31; margin-top: -50px; padding-top: 5px;"><i>{{ user.school }}</i></p>
+    </div>
+    <div class="ar">
+      <p style="width: 100%; text-align: center;">Absence</p>
+    </div>
+    <div class="pi">
+      <p style="width: 100%; text-align: center;">Info</p>
+    </div>
+  </body>
+</html>
