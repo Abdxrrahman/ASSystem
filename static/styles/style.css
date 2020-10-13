@@ -101,6 +101,7 @@ a {
 }
 
 .pb {
+  animation: slide-to-left 2s 1;
   margin-top: 10px;
   width: 90%;
   height: auto;
@@ -110,21 +111,54 @@ a {
   text-align: center;
   font-size: 200%;
   color: #bf4a31;
+  border-radius: 20px;
 }
 
 .ar {
+  animation: slide-to-left 2s 1;
   color: #bf4a31;
   width: 25%;
   height: 500px;
   background: white;
   margin-left: 5%;
+  border-radius: 20px;
 }
 
 .pi {
+  animation: slide-to-left 2s 1;
   color: #bf4a31;
-  margin-top: -516px;
+  margin-top: -525px;
   width: 63%;
   height: 500px;
   background: white;
   margin-left: 32%;
+  border-radius: 20px;
+}
+
+@keyframes slide-to-left {
+  0% {
+    opacity: 0;
+  }
+  50%{
+    transform: translateX(20px);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  50%{
+
+  }
+}
+
+@keyframes rotate-around {
+  35% {
+    transform: rotate(0.5deg);
+  }
+  70%{
+    transform: rotate(-0.5deg);
+    letter-spacing: 1px;
+  }
 }

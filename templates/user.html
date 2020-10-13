@@ -9,14 +9,34 @@
   <body>
     {% include "navbar.html" %}
     <div class="pb">
+      <p style="border-bottom: 1px solid #bf4a31; width: 100%; text-align: center; margin-bottom:-25px;"><a href="/database"><</a></p>
       <p>{{ user.name }}</p>
       <p style="font-size: 50%; color: #bf4a31; margin-top: -50px; padding-top: 5px;"><i>{{ user.school }}</i></p>
     </div>
     <div class="ar">
-      <p style="width: 100%; text-align: center;">Absence</p>
+      <p style="width: 100%; text-align: center; font-size: 150%; border-bottom: 1px solid #bf4a31;">Absence</p>
     </div>
     <div class="pi">
-      <p style="width: 100%; text-align: center;">Info</p>
+      <p style="width: 100%; text-align: center; font-size: 150%; border-bottom: 1px solid #bf4a31;">Info</p>
+      <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>REGISTERED: </strong>{{ user.date_created }}</p>
+      <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>ADMINISTRATOR: </strong>{{ user.admin }}</p>
+      <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>SCHOOL: </strong>{{ user.school }}</p>
+      {% if user.admin == False and user.teacher == False and user.principal == False  %}
+        <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>YEAR: </strong>{{ user.year }}</p>
+        <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>ROLE: </strong>Student</p>
+      {% endif %}
+      {% if user.teacher == True %}
+        <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>ROLE: </strong>Teacher</p>
+        <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>TEACHER FOR: </strong>Year 2</p>
+      {% endif %}
+      {% if user.admin == True %}
+        <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>ROLE: </strong>Administrator</p>
+      {% endif %}
+      {% if user.principal == True %}
+        <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>ROLE: </strong>Principal</p>
+      {% endif %}
+      <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>ONLINE: </strong>{{ user.online }}</p>
+      <p style="width: 100%; text-align: left; padding-left:10px; margin: 0;"><strong>ID: </strong>{{ user.id }}</p>
     </div>
   </body>
 </html>
