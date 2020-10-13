@@ -9,12 +9,12 @@
   <body>
 
     <div class="nb">
-      <p class="lt">Empty<strong>Project</strong></p>
+      <p class="lt"><strong>Abdurrahman's</strong></p><p style="float:left; margin-top: -35px; text-align: center; width: 200px; color: #bf4a31;">School System</p>
       {% if current_user.is_authenticated == False %}
         <button class="lrb" type="button" name="button"><a href="authorize">Sign in</a></button>
       {% else %}
         <button class="lrb" type="button" name="button"><a href="unauthorize/{{ current_user.name }}/{{ current_user.id }}" method="POST">Sign out</a></button>
-        <p style="float: right; margin-top: -28px; text-align: center; font-size: 70%; width: 100%; color: #bf4a31;">Thank you for choosing this service:<strong> {{ current_user.name }}</strong></p>
+        <p style="float: right; margin-top: -18px; text-align: center; font-size: 70%; width: 100%; color: #bf4a31;">Thank you for choosing this service:<strong> {{ current_user.name }}</strong></p>
       {% endif %}
 
     </div>

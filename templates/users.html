@@ -11,30 +11,55 @@
     {% include "navbar.html" %}
 
     {% for user in users %}
+    {% if user.school == current_user.school %}
       <div class="ur" style="float: left; margin-bottom: 7px;">
-        <p style="margin-bottom: -5px;"><strong>Username:</strong> {{ user.name }} <strong>ID:</strong> {{ user.id }}</p>
 
-        {% if user.name == "Abdxrrahman" %}
-          <a style="color: blue; font-size: 120%;">•</a>
+
+
+        {% if user.admin == true %}
+          <p style="margin-bottom: -5px;"><strong>Name:</strong> {{ user.name }}</p>
+          <a style="color: black; font-size: 80%;">Adminstrator at <i>{{ user.admin_school }}</i></a>
+          <br>
+        {% elif user.verified %}
+          <p style="margin-bottom: -5px;"><strong>Name:</strong> {{ user.name }} <strong>Year:</strong> {{ user.year }}</p>
+          <a style="color: black; font-size: 80%;">Student at <i>{{ user.school }}</i></a>
+          <br>
+        {% else %}
+          <p style="margin-bottom: -5px;"><strong>Name:</strong> {{ user.name }} <strong>Year:</strong> {{ user.year }}</p>
+          <a style="color: black; font-size: 80%;">Applying for <i>{{ user.school }}</i></a>
+          <br>
         {% endif %}
 
 
 
-        {% if user.online %}
+
+        {% if user.verified %}
           <a style="color: green; font-size: 120%;">•</a>
+          {% if not user.admin and current_user.admin == True %}
+          <a style="color: purple; font-size: 120%;" href="unverify/{{ user.id }}">•</a>
+          {% endif %}
+        {% elif current_user.admin == True %}
+          <a style="color: purple; font-size: 120%;" href="verify/{{ user.id }}">•</a>
         {% endif %}
 
         {% if current_user.name == user.name %}
           <a style="color: orange; font-size: 120%;">•</a>
         {% endif %}
 
-        {% if current_user.name == "Abdxrrahman" %}
-          {% if not user.name == "Abdxrrahman" %}
+        {% if current_user.admin == True %}
+          {% if not user.name == current_user.name and user.verified %}
+            <a href="user/{{ user.name }}" style="color: yellow; font-size: 120%;">•</a>
+          {% endif %}
+        {% endif %}
+
+        {% if current_user.admin == True %}
+          {% if not user.name == current_user.name %}
             <a href="delete/{{ user.id }}" style="color: red; font-size: 120%;">•</a>
           {% endif %}
         {% endif %}
         <br>
       </div>
+    {% endif %}
     {% endfor %}
   </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/portal.css') }}">
+    <title></title>
+  </head>
+  <body>
+    {% include "navbar.html" %}
+    {% if current_user.verified %}
+    <div class="feature_container">
+      <div style="flex-grow:1;" class="feature">
+          <p>Homework</p>
+      </div>
+      <div style="flex-grow:1;" class="feature">
+          <p onclick="cl(this)">Classlist</p>
+      </div>
+    </div>
+
+    <div id="cl" class="cl">
+    {% for user in users %}
+    {% if user.school == current_user.school and user.admin == False and user.year == current_user.year and user.verified == True %}
+
+      <div class="cms">
+        <p>{{ user.name }}</p>
+      </div>
+
+    {% endif %}
+    {% endfor %}
+    </div>
+    {% else %}
+    <div class="popup1">
+      <h3>Tell the administor of <i>{{ current_user.school }}</i> to verify you.</h3>
+    </div>
+    {% endif %}
+  </body>
+  <script type="text/javascript">
+    document.getElementById("cl").style.display = "none";
+    cltoggle = false;
+
+    function cl(clb){
+      if (cltoggle == false){
+        cltoggle = true;
+        document.getElementById("cl").style.opacity = 0;
+        document.getElementById("cl").style.display = "flex";
+        document.getElementById("cl").style.animation = "opacity 2s 1";
+        document.getElementById("cl").style.opacity = 1;
+      }else{
+        cltoggle = false;
+        document.getElementById("cl").style.opacity = 1;
+        document.getElementById("cl").style.animation = "opacity2 2s 1";
+        document.getElementById("cl").style.opacity = 0;
+        document.getElementById("cl").style.display = "flex";
+      }
+    }
+
+  </script>
+</html>

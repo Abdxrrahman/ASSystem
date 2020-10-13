@@ -18,7 +18,12 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(50), unique=True)
     password = db.Column(db.Integer)
     date_created = db.Column(db.DateTime, default=datetime.now)
-    online = db.Column(db.Boolean, default=False);
+    online = db.Column(db.Boolean, default=False)
+    year = db.Column(db.String(1))
+    school = db.Column(db.String(50))
+    admin = db.Column(db.Boolean, default=False)
+    admin_school = db.Column(db.String(50))
+    verified = db.Column(db.Boolean, default=False)
 
 
 @login_manager.user_loader
@@ -46,6 +51,10 @@ def authorization(name, password):
 def main():
     return render_template("index.html")
 
+@app.route("/portal")
+def portal():
+    users = User.query.order_by(User.id).all()
+    return render_template("portal.html",users=users)
 
 @app.route("/create/user", methods=["POST"])
 def create_new_user():
@@ -53,17 +62,30 @@ def create_new_user():
         req = request.form
         username = req.get("username")
         password = request.form["password"]
+        year = request.form["year"]
+        school = request.form["school"]
+        admin = request.form["admin"]
 
-        return redirect(f"/create/user/{ username }/{ password }")
+        return redirect(f"/create/user/{ username }/{ password }/{ year }/{ school }/{ admin }")
         return redirect(f"/authorize/{ username }/{ password }")
     return redirect(f"/")
 
 
-@app.route("/create/user/<name>/<password>")
-def new_user(name, password):
-    user = User(name=name, password=password)
+@app.route("/create/user/<name>/<password>/<year>/<school>/<admin>")
+def new_user_admin(name, password, year, school, admin):
+    if (admin=="0000"):
+        user = User(name=name, password=password, year=year, school=school, admin=True, admin_school=school, verified=True)
+        db.session.add(user)
+        db.session.commit()
+
+    return redirect(f"/authorize")
+
+@app.route("/create/user/<name>/<password>/<year>/<school>/")
+def new_user(name, password, year, school):
+    user = User(name=name, password=password, year=year, school=school, admin=False)
     db.session.add(user)
     db.session.commit()
+
     return redirect(f"/authorize")
 
 
@@ -89,7 +111,17 @@ def unauthorize(name, id):
 @app.route('/user/<name>')
 def get_user(name):
     user = User.query.filter_by(name=name).first()
-    return f'<h1>The user has id: { user.id }</h1>'
+    return render_template("user.html",user=user)
+
+@app.route("/edit/user", methods=["POST"])
+def edit_user():
+    if request.method == "POST":
+        req = request.form
+        username = req.get("username")
+
+
+        return redirect(f"/edit/user/{ username }/")
+    return redirect(f"/")
 
 @app.route('/database')
 def get_users():
@@ -103,6 +135,21 @@ def delete_user(id):
     db.session.delete(user)
     db.session.commit()
     return redirect(f"/database")
+
+@app.route('/verify/<id>')
+def verify_user(id):
+    user = User.query.filter_by(id=id).first()
+    user.verified = True
+    db.session.commit()
+    return redirect(f"/database")
+
+@app.route('/unverify/<id>')
+def unverify_user(id):
+    user = User.query.filter_by(id=id).first()
+    user.verified = False
+    db.session.commit()
+    return redirect(f"/database")
+
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True, host='192.168.1.65', use_reloader=True)
