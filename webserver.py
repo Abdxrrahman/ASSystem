@@ -22,7 +22,8 @@ class User(UserMixin, db.Model):
     year = db.Column(db.String(1))
     school = db.Column(db.String(50))
     admin = db.Column(db.Boolean, default=False)
-    admin_school = db.Column(db.String(50))
+    teacher = db.Column(db.Boolean, default=False)
+    principal = db.Column(db.Boolean, default=False)
     verified = db.Column(db.Boolean, default=False)
 
 
@@ -49,7 +50,11 @@ def authorization(name, password):
 
 @app.route("/")
 def main():
-    return render_template("index.html")
+    counter = 0;
+    users = User.query.order_by(User.id).all()
+    for user in users:
+        counter = counter + 1;
+    return render_template("index.html", counter=counter)
 
 @app.route("/portal")
 def portal():
@@ -74,7 +79,15 @@ def create_new_user():
 @app.route("/create/user/<name>/<password>/<year>/<school>/<admin>")
 def new_user_admin(name, password, year, school, admin):
     if (admin=="0000"):
-        user = User(name=name, password=password, year=year, school=school, admin=True, admin_school=school, verified=True)
+        user = User(name=name, password=password, year=year, school=school, admin=True, verified=True)
+        db.session.add(user)
+        db.session.commit()
+    elif (admin=="0001"):
+        user = User(name=name, password=password, year=year, school=school, teacher=True, verified=True)
+        db.session.add(user)
+        db.session.commit()
+    elif (admin=="0002"):
+        user = User(name=name, password=password, year=year, school=school, principal=True, verified=True)
         db.session.add(user)
         db.session.commit()
 
